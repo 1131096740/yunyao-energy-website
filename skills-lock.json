@@ -1,0 +1,341 @@
+{
+  "version": 1,
+  "skills": {
+    "aihot": {
+      "source": "KKKKhazix/khazix-skills",
+      "sourceType": "github",
+      "skillPath": "aihot/SKILL.md",
+      "computedHash": "45075e2717bd8b2656117d0ec1cf2afec6c615cc876e2467faa4e0cae5f149d7"
+    },
+    "baoyu-article-illustrator": {
+      "source": "JimLiu/baoyu-skills",
+      "sourceType": "github",
+      "skillPath": "skills/baoyu-article-illustrator/SKILL.md",
+      "computedHash": "a1feddae1843cac24aae95f69d63a183574413ac48c141c61c22e1b0ef422627"
+    },
+    "baoyu-comic": {
+      "source": "JimLiu/baoyu-skills",
+      "sourceType": "github",
+      "skillPath": "skills/baoyu-comic/SKILL.md",
+      "computedHash": "e5fd26fc86e6a64236178c6796c7dca6b352f9cd9116f50f3b8967739b6cd658"
+    },
+    "baoyu-compress-image": {
+      "source": "JimLiu/baoyu-skills",
+      "sourceType": "github",
+      "skillPath": "skills/baoyu-compress-image/SKILL.md",
+      "computedHash": "0d5f175415d21d7563518967513a73c0c1a8faa384aa9f1abc12c47e6c1e32ef"
+    },
+    "baoyu-cover-image": {
+      "source": "JimLiu/baoyu-skills",
+      "sourceType": "github",
+      "skillPath": "skills/baoyu-cover-image/SKILL.md",
+      "computedHash": "d750a18fce9e7f00db19c2279c79a0e9ba6e891aee10b488f66e4812647c4fe5"
+    },
+    "baoyu-danger-gemini-web": {
+      "source": "JimLiu/baoyu-skills",
+      "sourceType": "github",
+      "skillPath": "skills/baoyu-danger-gemini-web/SKILL.md",
+      "computedHash": "cfa555e7fd3aae0d009eab7a5d29ca819336127760ac303249e8a91f5aad21f7"
+    },
+    "baoyu-danger-x-to-markdown": {
+      "source": "JimLiu/baoyu-skills",
+      "sourceType": "github",
+      "skillPath": "skills/baoyu-danger-x-to-markdown/SKILL.md",
+      "computedHash": "f615dc6edeb2e35452da0440b16fa8e9cb9c413b920a564c5bde227b9ab0373a"
+    },
+    "baoyu-diagram": {
+      "source": "JimLiu/baoyu-skills",
+      "sourceType": "github",
+      "skillPath": "skills/baoyu-diagram/SKILL.md",
+      "computedHash": "e7916305c6010b1bdcc1579754e6c7b4dd5462ac033c34327c640e5a18e52b75"
+    },
+    "baoyu-electron-extract": {
+      "source": "JimLiu/baoyu-skills",
+      "sourceType": "github",
+      "skillPath": "skills/baoyu-electron-extract/SKILL.md",
+      "computedHash": "65733d70ad013a14904715e1f08d55991b39203f24ad4de5eebdcbdde7a34409"
+    },
+    "baoyu-format-markdown": {
+      "source": "JimLiu/baoyu-skills",
+      "sourceType": "github",
+      "skillPath": "skills/baoyu-format-markdown/SKILL.md",
+      "computedHash": "188fda27907b76d5f040bcd1e49754ec9e0a948ccb38898114df3c2448ef793a"
+    },
+    "baoyu-image-gen": {
+      "source": "JimLiu/baoyu-skills",
+      "sourceType": "github",
+      "skillPath": "skills/baoyu-image-gen/SKILL.md",
+      "computedHash": "fcf170cbc157b9ba1a9cfdee821e019a5af12131200d6b5d7b6681f0f90a9dae"
+    },
+    "baoyu-infographic": {
+      "source": "JimLiu/baoyu-skills",
+      "sourceType": "github",
+      "skillPath": "skills/baoyu-infographic/SKILL.md",
+      "computedHash": "ca10530d4b44ad50b708ac7e82a53967437772a8d4a5455337d9ae621874c040"
+    },
+    "baoyu-markdown-to-html": {
+      "source": "JimLiu/baoyu-skills",
+      "sourceType": "github",
+      "skillPath": "skills/baoyu-markdown-to-html/SKILL.md",
+      "computedHash": "800b8bfeb27396b5d69db853dc5a56824f62e0f76d202825a4c1a575bd081222"
+    },
+    "baoyu-post-to-wechat": {
+      "source": "JimLiu/baoyu-skills",
+      "sourceType": "github",
+      "skillPath": "skills/baoyu-post-to-wechat/SKILL.md",
+      "computedHash": "e9679d5eed6d6e93930ebb02d98519feb74e8ecaaa00426521faf9a36802de1c"
+    },
+    "baoyu-post-to-weibo": {
+      "source": "JimLiu/baoyu-skills",
+      "sourceType": "github",
+      "skillPath": "skills/baoyu-post-to-weibo/SKILL.md",
+      "computedHash": "12d2ab8604d41627ca8f6688799d4b8a912b5ed4e84a0f6231068e71c4529fcd"
+    },
+    "baoyu-post-to-x": {
+      "source": "JimLiu/baoyu-skills",
+      "sourceType": "github",
+      "skillPath": "skills/baoyu-post-to-x/SKILL.md",
+      "computedHash": "18d33dd94d4a0940953862b0b460996500a64bd401a9dc290465e5eede8456a1"
+    },
+    "baoyu-slide-deck": {
+      "source": "JimLiu/baoyu-skills",
+      "sourceType": "github",
+      "skillPath": "skills/baoyu-slide-deck/SKILL.md",
+      "computedHash": "d5f9a3d834eeb9b3255e0ae6e8d7bac8b462758a3bb2aafd2381e6346d6c9bc0"
+    },
+    "baoyu-translate": {
+      "source": "JimLiu/baoyu-skills",
+      "sourceType": "github",
+      "skillPath": "skills/baoyu-translate/SKILL.md",
+      "computedHash": "d270c0ac196433b432e65311f039fb89fbbcfbda96f062af300fffbdc701978a"
+    },
+    "baoyu-url-to-markdown": {
+      "source": "JimLiu/baoyu-skills",
+      "sourceType": "github",
+      "skillPath": "skills/baoyu-url-to-markdown/SKILL.md",
+      "computedHash": "ca98ae07f45f5a5ae8976845a2df3f3be307181e280b0c51dd04fe4cd32699b6"
+    },
+    "baoyu-wechat-summary": {
+      "source": "JimLiu/baoyu-skills",
+      "sourceType": "github",
+      "skillPath": "skills/baoyu-wechat-summary/SKILL.md",
+      "computedHash": "98ddcdd7724051f99c6900ccd4e4e8f48e263f7c28cb5c9f1d834b9f2787ee6e"
+    },
+    "baoyu-xhs-images": {
+      "source": "JimLiu/baoyu-skills",
+      "sourceType": "github",
+      "skillPath": "skills/baoyu-xhs-images/SKILL.md",
+      "computedHash": "67fcb720fdfd786694789d25df20b6ab7fed219730a82d3ce13eb1f1d99728ef"
+    },
+    "baoyu-youtube-transcript": {
+      "source": "JimLiu/baoyu-skills",
+      "sourceType": "github",
+      "skillPath": "skills/baoyu-youtube-transcript/SKILL.md",
+      "computedHash": "e39b39f19d681ef05e3d8e7fc6eabbbc0a9260f4512a5bb51fbb04b1e56c8664"
+    },
+    "dbs": {
+      "source": "dontbesilent2025/dbskill",
+      "sourceType": "github",
+      "skillPath": "skills/dbs/SKILL.md",
+      "computedHash": "ebf408972a919f704fc707e5e4463245bca12fc43413920c35460a5ef6c84573"
+    },
+    "dbs-action": {
+      "source": "dontbesilent2025/dbskill",
+      "sourceType": "github",
+      "skillPath": "skills/dbs-action/SKILL.md",
+      "computedHash": "6d91b90f6eb94ca28daf9a73859e42fc18c5f7ef97b88a75695ee3671c5319d9"
+    },
+    "dbs-agent-migration": {
+      "source": "dontbesilent2025/dbskill",
+      "sourceType": "github",
+      "skillPath": "skills/dbs-agent-migration/SKILL.md",
+      "computedHash": "74ce9c954a8a3d506c7d4d749c2722ccfc247dc1d8374b5206a0964c15119ee7"
+    },
+    "dbs-ai-check": {
+      "source": "dontbesilent2025/dbskill",
+      "sourceType": "github",
+      "skillPath": "skills/dbs-ai-check/SKILL.md",
+      "computedHash": "e7e9333deed8bd449c0ff34815cd2e6df6f2f57f3a3b7dc09d0f4c164841a030"
+    },
+    "dbs-benchmark": {
+      "source": "dontbesilent2025/dbskill",
+      "sourceType": "github",
+      "skillPath": "skills/dbs-benchmark/SKILL.md",
+      "computedHash": "c472e6c758e1ffa7552aa2b5064f18ce9f15c570fc783253b2d88b32de7a6c3c"
+    },
+    "dbs-chatroom": {
+      "source": "dontbesilent2025/dbskill",
+      "sourceType": "github",
+      "skillPath": "skills/dbs-chatroom/SKILL.md",
+      "computedHash": "fa2f9151d37ef4552188ee4352f7a74a04a63f26207bbe3646a11b2abe57306d"
+    },
+    "dbs-chatroom-austrian": {
+      "source": "dontbesilent2025/dbskill",
+      "sourceType": "github",
+      "skillPath": "skills/dbs-chatroom-austrian/SKILL.md",
+      "computedHash": "1c602cb40144d48a327c234815c928099a3630f91e81a348b19bd6587f7965cd"
+    },
+    "dbs-content": {
+      "source": "dontbesilent2025/dbskill",
+      "sourceType": "github",
+      "skillPath": "skills/dbs-content/SKILL.md",
+      "computedHash": "3f9eb6b8befb49a611966f5433cd86a447eebecc69e661388720716d006e4692"
+    },
+    "dbs-decision": {
+      "source": "dontbesilent2025/dbskill",
+      "sourceType": "github",
+      "skillPath": "skills/dbs-decision/SKILL.md",
+      "computedHash": "c638730600f8ad2b06961fa1b4aa9dc81f5410198be4e7534d7476d32429ad07"
+    },
+    "dbs-deconstruct": {
+      "source": "dontbesilent2025/dbskill",
+      "sourceType": "github",
+      "skillPath": "skills/dbs-deconstruct/SKILL.md",
+      "computedHash": "7d1492b21cc934cdd222f8aab0a2fc62241935587502bf6984e333c980a02357"
+    },
+    "dbs-diagnosis": {
+      "source": "dontbesilent2025/dbskill",
+      "sourceType": "github",
+      "skillPath": "skills/dbs-diagnosis/SKILL.md",
+      "computedHash": "b5ce31f7e9ba79a6193b120a5550e1854ba64f39049c6f9773321e849a3b4d71"
+    },
+    "dbs-goal": {
+      "source": "dontbesilent2025/dbskill",
+      "sourceType": "github",
+      "skillPath": "skills/dbs-goal/SKILL.md",
+      "computedHash": "39b1173cb606fd25eaf1cf624d5260914b1e356dc77a29832bf4aa7bec68815f"
+    },
+    "dbs-good-question": {
+      "source": "dontbesilent2025/dbskill",
+      "sourceType": "github",
+      "skillPath": "skills/dbs-good-question/SKILL.md",
+      "computedHash": "53a0e721c4439ce0271fc0509c466285d8c8b3fd70cbad15acbfba24175817e8"
+    },
+    "dbs-hook": {
+      "source": "dontbesilent2025/dbskill",
+      "sourceType": "github",
+      "skillPath": "skills/dbs-hook/SKILL.md",
+      "computedHash": "cdd7d7029662c8431d3fbcefe37de49586b93f507fda6dd02a1d7a77ae74cb25"
+    },
+    "dbs-learning": {
+      "source": "dontbesilent2025/dbskill",
+      "sourceType": "github",
+      "skillPath": "skills/dbs-learning/SKILL.md",
+      "computedHash": "f5d9cb2750004964198e17744e4c9fc6094e064e28faf6666ff1a48e3c39877f"
+    },
+    "dbs-report": {
+      "source": "dontbesilent2025/dbskill",
+      "sourceType": "github",
+      "skillPath": "skills/dbs-report/SKILL.md",
+      "computedHash": "dbb45955f348809222922b5935190bd26435a543362ae44181d8352aefeb0e7c"
+    },
+    "dbs-restore": {
+      "source": "dontbesilent2025/dbskill",
+      "sourceType": "github",
+      "skillPath": "skills/dbs-restore/SKILL.md",
+      "computedHash": "497d9d8119ef50ca04d54d7173e04c157da9119745b6f373fd710fed6e58f2cc"
+    },
+    "dbs-save": {
+      "source": "dontbesilent2025/dbskill",
+      "sourceType": "github",
+      "skillPath": "skills/dbs-save/SKILL.md",
+      "computedHash": "25e70f877e8fda95567842d82a595fb322f49e7b6fc14366b95300cf98a33593"
+    },
+    "dbs-slowisfast": {
+      "source": "dontbesilent2025/dbskill",
+      "sourceType": "github",
+      "skillPath": "skills/dbs-slowisfast/SKILL.md",
+      "computedHash": "f6a6336d8be65b33d8e89c64ad2b47b8045c12d7e0524dab2d02afc2d12e8494"
+    },
+    "dbs-xhs-title": {
+      "source": "dontbesilent2025/dbskill",
+      "sourceType": "github",
+      "skillPath": "skills/dbs-xhs-title/SKILL.md",
+      "computedHash": "2b081fa504f7c9e94b1069ef0c75d94e46ed98ac68e52b53dca5a5b007989333"
+    },
+    "humanizer-zh": {
+      "source": "op7418/Humanizer-zh",
+      "sourceType": "github",
+      "skillPath": "SKILL.md",
+      "computedHash": "ad6b2b1f1433413c64f6403dc322d950da175a058f494291bd4399e77cb587c7"
+    },
+    "hv-analysis": {
+      "source": "KKKKhazix/khazix-skills",
+      "sourceType": "github",
+      "skillPath": "hv-analysis/SKILL.md",
+      "computedHash": "68d259e046e7862fffcdb631cb24c2d5cb3cc22d5745f1a73a267608772800cf"
+    },
+    "khazix-writer": {
+      "source": "KKKKhazix/khazix-skills",
+      "sourceType": "github",
+      "skillPath": "khazix-writer/SKILL.md",
+      "computedHash": "a05dba5f3ccdeb8d1c9c3ab9d820547ec0ab1365d54d682e29d5724bbafecb6c"
+    },
+    "maxhub-skills": {
+      "source": "XieWxx/maxhub-api-skills",
+      "sourceType": "github",
+      "skillPath": "SKILL.md",
+      "computedHash": "17595aa58c97539dca80abf4cbc4184888c0d1f28d782942c4de65602fcc7ff2"
+    },
+    "neat-freak": {
+      "source": "KKKKhazix/khazix-skills",
+      "sourceType": "github",
+      "skillPath": "neat-freak/SKILL.md",
+      "computedHash": "1806d2dffcd25ad50d2c63da92a3acf212f1c156ad93f8b7dbf7644ae513c695"
+    },
+    "notebooklm": {
+      "source": "PleasePrompto/notebooklm-skill",
+      "sourceType": "github",
+      "skillPath": "SKILL.md",
+      "computedHash": "40877d53667ab1d100695e3b171c305a9c341fa251835af1c6f5d8a910f3ac6f"
+    },
+    "qiaomu-opencli-autofix": {
+      "source": "joeseesun/opencli-skill",
+      "sourceType": "github",
+      "skillPath": "qiaomu-opencli-autofix/SKILL.md",
+      "computedHash": "74a45bcca40db6f27661be5cda1b17119c21a72fde15042da2475075c9c283ac"
+    },
+    "qiaomu-opencli-browser": {
+      "source": "joeseesun/opencli-skill",
+      "sourceType": "github",
+      "skillPath": "qiaomu-opencli-browser/SKILL.md",
+      "computedHash": "fdca36698a7edd6cafa461e8efaa72955a1d0e4b95e629f3bf2cd2a090d6953f"
+    },
+    "qiaomu-opencli-explorer": {
+      "source": "joeseesun/opencli-skill",
+      "sourceType": "github",
+      "skillPath": "qiaomu-opencli-explorer/SKILL.md",
+      "computedHash": "cbbb46f7866ac2fb4e6af4a9fa8a4c7be591503dba26b161dda5d54dee454bba"
+    },
+    "qiaomu-opencli-oneshot": {
+      "source": "joeseesun/opencli-skill",
+      "sourceType": "github",
+      "skillPath": "qiaomu-opencli-oneshot/SKILL.md",
+      "computedHash": "93f7635674edf89273f9efd97c2b30d22437dc71728651cf595c6ff3b9b3451b"
+    },
+    "qiaomu-opencli-usage": {
+      "source": "joeseesun/opencli-skill",
+      "sourceType": "github",
+      "skillPath": "qiaomu-opencli-usage/SKILL.md",
+      "computedHash": "b5158072cd89c08d0ac45664c2ea0b72ac8ab84f7aee51ea478d3819a2fb4bb2"
+    },
+    "qiaomu-smart-search": {
+      "source": "joeseesun/opencli-skill",
+      "sourceType": "github",
+      "skillPath": "qiaomu-smart-search/SKILL.md",
+      "computedHash": "012e70535b5574c7473d235eb85dea35daccad2d07c86e1543f9aba2ffccce94"
+    },
+    "release-skills": {
+      "source": "JimLiu/baoyu-skills",
+      "sourceType": "github",
+      "skillPath": ".claude/skills/release-skills/SKILL.md",
+      "computedHash": "5409cb532b40552f455827f69938193f6b3f3b7e853565e816eee4fa147ab8c7"
+    },
+    "storage-analyzer": {
+      "source": "KKKKhazix/khazix-skills",
+      "sourceType": "github",
+      "skillPath": "storage-analyzer/SKILL.md",
+      "computedHash": "14e4739286cd77f2eabf3aa1e1f26edfa24b816566d6be372dcb4c7e331a774d"
+    }
+  }
+}

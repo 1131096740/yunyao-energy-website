@@ -1,0 +1,21 @@
+﻿.auth/
+.auth-xhs/
+.env
+.cheat-cache/
+.venv/
+__pycache__/
+*.pyc
+*.log
+*.tmp
+.DS_Store
+
+# Build output
+website/dist/
+
+# Node modules (non-website)
+.npm-cache/
+opencli-home/.opencli/node_modules/
+
+# Video renders (too large for git)
+videos/*/renders/*.mp4
+videos/*/renders/*.webm

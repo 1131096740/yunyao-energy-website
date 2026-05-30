@@ -1,0 +1,517 @@
+<!doctype html>
+<html lang="zh-CN">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>假机油风险提醒</title>
+    <style>
+      html,
+      body {
+        width: 100%;
+        height: 100%;
+        margin: 0;
+        background: #0b0f14;
+        overflow: hidden;
+      }
+
+      body {
+        display: grid;
+        place-items: center;
+        font-family: "Microsoft YaHei UI", "PingFang SC", Arial, sans-serif;
+      }
+
+      [data-composition-id="fake-oil-warning"] {
+        width: min(100vw, 177.7778vh);
+        aspect-ratio: 16 / 9;
+        background: #0b0f14;
+        position: relative;
+      }
+
+      canvas {
+        width: 100%;
+        height: 100%;
+        display: block;
+      }
+
+      .controls {
+        position: fixed;
+        left: 16px;
+        bottom: 16px;
+        display: flex;
+        gap: 8px;
+      }
+
+      .controls button {
+        border: 1px solid rgba(255, 255, 255, 0.25);
+        background: rgba(11, 15, 20, 0.8);
+        color: #f7f8f5;
+        padding: 10px 14px;
+        border-radius: 6px;
+        font: 600 14px "Microsoft YaHei UI", sans-serif;
+      }
+
+      body.recording .controls {
+        display: none;
+      }
+    </style>
+  </head>
+  <body>
+    <div data-composition-id="fake-oil-warning" data-width="1920" data-height="1080">
+      <canvas id="stage" width="1920" height="1080"></canvas>
+      <audio id="narration" src="assets/voice-rate1.wav" preload="auto"></audio>
+    </div>
+    <div class="controls">
+      <button id="play">播放</button>
+      <button id="pause">暂停</button>
+    </div>
+
+    <script>
+      const W = 1920;
+      const H = 1080;
+      const canvas = document.getElementById("stage");
+      const ctx = canvas.getContext("2d");
+      const audio = document.getElementById("narration");
+      const speaker = new Image();
+      speaker.src = "assets/speaker.png";
+
+      const SCRIPT = [
+        "车主朋友们，先别急着划走。你车里现在用的机油，到底是不是正规渠道来的，你真的确定吗？",
+        "很多人保养车的时候，只问一句：多少钱。老板说便宜，朋友说能用，包装看起来也像那么回事，于是就加进去了。车当时能开，发动机也没马上报警，你就觉得没事。问题就在这里。假机油、劣质机油最吓人的地方，不是它立刻把车弄坏，而是它让你以为一切正常。",
+        "机油是直接进发动机里面工作的。它不是贴在外面的装饰，也不是可有可无的小配件。它要润滑，要降温，要清洁，还要把发动机内部那些高温、高速摩擦的地方撑住。油不对，短时间可能只是噪音大一点、油耗高一点、动力肉一点。再往后，油泥、积碳、磨损、烧机油，都是一点一点来的。",
+        "更麻烦的是，等你真的发现车不对劲，已经很难说清楚是哪一次保养出了问题。你只记得自己省了几十块，或者图方便在不熟的地方加了一桶油。可发动机大修的时候，账不是按几十块算的。",
+        "所以我劝车主一句实在话：机油别乱加。尤其是那种价格低得不正常、来源说不清、包装查不明白、对方只会跟你说“放心，大家都用”的油，真的要留个心眼。车不会替你分辨真假，它只会把结果慢慢还给你。",
+        "你可以不懂机油参数，但你至少要知道自己买的是谁家的、从哪里来的、适不适合你的车、出了问题找谁负责。连这些都说不清楚的机油，别轻易往发动机里倒。",
+        "如果你最近准备保养，或者你以前也有过“这个油到底靠不靠谱”的疑问，可以点进主页看看。这里是云耀能源润滑油官方号。我们后面会持续讲机油怎么选、怎么避坑、什么车适合什么油，以及哪些保养话术听着便宜，其实最容易让车主吃亏。",
+        "你今天不一定要买。但你一定要先学会判断。因为机油加错一次，损失的可能不是一桶油的钱，而是发动机的寿命。"
+      ].join("\n");
+
+      const PHASES = [
+        { at: 0.00, title: "先别急着划走", note: "你车里的机油，来源确定吗？", level: "QUESTION" },
+        { at: 0.13, title: "最吓人的不是立刻坏", note: "而是让你以为一切正常", level: "RISK" },
+        { at: 0.28, title: "机油直接进入发动机工作", note: "润滑、降温、清洁、承受高速摩擦", level: "ENGINE" },
+        { at: 0.43, title: "真正发现时，往往说不清", note: "哪一次保养埋下了问题", level: "COST" },
+        { at: 0.56, title: "机油别乱加", note: "价格异常、来源不清、包装查不明", level: "WARNING" },
+        { at: 0.70, title: "至少问清四件事", note: "谁家的、哪里来的、适不适合、谁负责", level: "CHECK" },
+        { at: 0.84, title: "先学会判断", note: "加错一次，伤的是发动机寿命", level: "FINAL" }
+      ];
+
+      const KEYWORDS = [
+        "正规渠道",
+        "假机油",
+        "劣质机油",
+        "一切正常",
+        "发动机",
+        "油泥",
+        "积碳",
+        "磨损",
+        "烧机油",
+        "大修",
+        "机油别乱加",
+        "价格低得不正常",
+        "来源说不清",
+        "包装查不明白",
+        "寿命"
+      ];
+
+      let groups = [];
+      let manualTime = null;
+      let audioDuration = 214;
+      let recorderState = "idle";
+
+      function splitClauses(text) {
+        const parts = [];
+        let current = "";
+        for (const ch of text) {
+          current += ch;
+          if ("。！？；，、：".includes(ch) && current.trim().length >= 8) {
+            parts.push(current.trim());
+            current = "";
+          }
+        }
+        if (current.trim()) parts.push(current.trim());
+        return parts;
+      }
+
+      function buildCaptionGroups(duration) {
+        const clauses = splitClauses(SCRIPT);
+        const packed = [];
+        let buffer = "";
+        for (const clause of clauses) {
+          if ((buffer + clause).length > 24 && buffer) {
+            packed.push(buffer);
+            buffer = clause;
+          } else {
+            buffer += clause;
+          }
+        }
+        if (buffer) packed.push(buffer);
+
+        const weights = packed.map((text) => Math.max(1.8, text.length * 0.18 + (/[。！？]/.test(text) ? 0.45 : 0)));
+        const total = weights.reduce((sum, item) => sum + item, 0);
+        let cursor = 0;
+        groups = packed.map((text, index) => {
+          const span = (weights[index] / total) * duration;
+          const item = { text, start: cursor, end: cursor + span };
+          cursor += span;
+          return item;
+        });
+        if (groups.length) {
+          groups[groups.length - 1].end = duration;
+        }
+      }
+
+      function activePhase(time) {
+        const p = audioDuration ? time / audioDuration : 0;
+        let current = PHASES[0];
+        for (const phase of PHASES) {
+          if (p >= phase.at) current = phase;
+        }
+        return current;
+      }
+
+      function activeCaption(time) {
+        return groups.find((group) => time >= group.start && time < group.end) || groups[groups.length - 1];
+      }
+
+      function wrapText(text, maxWidth, font) {
+        ctx.font = font;
+        const lines = [];
+        let line = "";
+        for (const ch of text) {
+          const next = line + ch;
+          if (ctx.measureText(next).width > maxWidth && line) {
+            lines.push(line);
+            line = ch;
+          } else {
+            line = next;
+          }
+        }
+        if (line) lines.push(line);
+        return lines.slice(0, 3);
+      }
+
+      function roundRect(x, y, width, height, radius) {
+        const r = Math.min(radius, width / 2, height / 2);
+        ctx.beginPath();
+        ctx.moveTo(x + r, y);
+        ctx.arcTo(x + width, y, x + width, y + height, r);
+        ctx.arcTo(x + width, y + height, x, y + height, r);
+        ctx.arcTo(x, y + height, x, y, r);
+        ctx.arcTo(x, y, x + width, y, r);
+        ctx.closePath();
+      }
+
+      function fillRoundRect(x, y, width, height, radius, fill) {
+        roundRect(x, y, width, height, radius);
+        ctx.fillStyle = fill;
+        ctx.fill();
+      }
+
+      function strokeRoundRect(x, y, width, height, radius, stroke, lineWidth) {
+        roundRect(x, y, width, height, radius);
+        ctx.strokeStyle = stroke;
+        ctx.lineWidth = lineWidth;
+        ctx.stroke();
+      }
+
+      function drawImageCover(img, progress) {
+        const sourceAspect = img.width / img.height;
+        const targetAspect = W / H;
+        let sx = 0;
+        let sy = 0;
+        let sw = img.width;
+        let sh = img.height;
+        if (sourceAspect > targetAspect) {
+          sw = img.height * targetAspect;
+          sx = (img.width - sw) / 2;
+        } else {
+          sh = img.width / targetAspect;
+          sy = (img.height - sh) / 2;
+        }
+
+        const zoom = 1.012 + progress * 0.018;
+        const dw = W * zoom;
+        const dh = H * zoom;
+        const dx = (W - dw) / 2 - 10 * Math.sin(progress * Math.PI);
+        const dy = (H - dh) / 2 + 6 * Math.sin(progress * Math.PI * 0.7);
+        ctx.drawImage(img, sx, sy, sw, sh, dx, dy, dw, dh);
+      }
+
+      function drawVignette(time) {
+        const pulse = 0.08 + 0.03 * Math.sin(time * 1.7);
+        const gradient = ctx.createRadialGradient(W * 0.5, H * 0.42, 180, W * 0.5, H * 0.5, 980);
+        gradient.addColorStop(0, "rgba(0,0,0,0)");
+        gradient.addColorStop(0.65, "rgba(0,0,0,0.10)");
+        gradient.addColorStop(1, `rgba(0,0,0,${0.42 + pulse})`);
+        ctx.fillStyle = gradient;
+        ctx.fillRect(0, 0, W, H);
+
+        const bottom = ctx.createLinearGradient(0, H * 0.63, 0, H);
+        bottom.addColorStop(0, "rgba(11,15,20,0)");
+        bottom.addColorStop(0.55, "rgba(11,15,20,0.72)");
+        bottom.addColorStop(1, "rgba(11,15,20,0.94)");
+        ctx.fillStyle = bottom;
+        ctx.fillRect(0, 0, W, H);
+      }
+
+      function drawHeader(time, progress) {
+        ctx.save();
+        ctx.globalAlpha = 0.94;
+        fillRoundRect(70, 52, 390, 56, 6, "rgba(11,15,20,0.78)");
+        ctx.fillStyle = "#F7F8F5";
+        ctx.font = "600 24px Microsoft YaHei UI, PingFang SC, sans-serif";
+        ctx.fillText("云耀能源润滑油官方号", 94, 89);
+
+        const timer = `${Math.floor(time / 60)}:${String(Math.floor(time % 60)).padStart(2, "0")}`;
+        fillRoundRect(W - 230, 52, 160, 56, 6, "rgba(11,15,20,0.78)");
+        ctx.fillStyle = "#F0B429";
+        ctx.font = "600 26px Consolas, Microsoft YaHei UI, monospace";
+        ctx.fillText(timer, W - 188, 89);
+
+        ctx.globalAlpha = 0.9;
+        ctx.fillStyle = "#D92323";
+        ctx.fillRect(70, 128, Math.max(4, (W - 140) * progress), 5);
+        ctx.restore();
+      }
+
+      function drawPhaseCard(phase, time) {
+        const beat = 0.5 + 0.5 * Math.sin(time * 3.2);
+        const x = 72;
+        const y = 690;
+        const w = 560;
+        const h = 132;
+        ctx.save();
+        fillRoundRect(x, y, w, h, 8, "rgba(11,15,20,0.78)");
+        strokeRoundRect(x, y, w, h, 8, `rgba(217,35,35,${0.35 + beat * 0.35})`, 2);
+
+        ctx.fillStyle = "#F0B429";
+        ctx.font = "700 22px Consolas, Microsoft YaHei UI, monospace";
+        ctx.fillText(phase.level, x + 28, y + 38);
+
+        ctx.fillStyle = "#F7F8F5";
+        ctx.font = "800 38px Microsoft YaHei UI, PingFang SC, sans-serif";
+        ctx.fillText(phase.title, x + 28, y + 83);
+
+        ctx.fillStyle = "#D6D9D4";
+        ctx.font = "500 25px Microsoft YaHei UI, PingFang SC, sans-serif";
+        ctx.fillText(phase.note, x + 28, y + 118);
+        ctx.restore();
+      }
+
+      function drawRiskStack(time, progress) {
+        const items = ["价格异常", "来源不清", "包装查不明", "只说放心"];
+        const x = W - 420;
+        const y = 640;
+        ctx.save();
+        ctx.font = "700 25px Microsoft YaHei UI, PingFang SC, sans-serif";
+        items.forEach((item, index) => {
+          const local = Math.max(0, Math.min(1, progress * 8 - index * 0.55));
+          const yy = y + index * 66;
+          ctx.globalAlpha = 0.55 + local * 0.45;
+          fillRoundRect(x, yy, 330, 46, 6, index === 0 ? "rgba(240,180,41,0.88)" : "rgba(11,15,20,0.74)");
+          ctx.fillStyle = index === 0 ? "#0B0F14" : "#F7F8F5";
+          ctx.fillText(item, x + 26, yy + 31);
+          ctx.fillStyle = "#D92323";
+          ctx.fillRect(x + 292, yy + 11, 6, 24 + Math.sin(time * 2 + index) * 5);
+        });
+        ctx.restore();
+      }
+
+      function drawCaption(caption, time) {
+        if (!caption) return;
+        const elapsed = Math.max(0, time - caption.start);
+        const fade = Math.min(1, elapsed / 0.25, (caption.end - time) / 0.18);
+        const font = "700 48px Microsoft YaHei UI, PingFang SC, sans-serif";
+        const lines = wrapText(caption.text, 1420, font);
+        const boxW = 1540;
+        const lineH = 66;
+        const boxH = Math.max(116, lines.length * lineH + 42);
+        const x = (W - boxW) / 2;
+        const y = H - boxH - 64;
+
+        ctx.save();
+        ctx.globalAlpha = Math.max(0, fade);
+        fillRoundRect(x, y, boxW, boxH, 8, "rgba(11,15,20,0.88)");
+        strokeRoundRect(x, y, boxW, boxH, 8, "rgba(247,248,245,0.12)", 2);
+        ctx.font = font;
+        ctx.textAlign = "center";
+        ctx.fillStyle = "#F7F8F5";
+        lines.forEach((line, index) => {
+          ctx.fillText(line, W / 2, y + 72 + index * lineH);
+        });
+
+        const keyword = KEYWORDS.find((word) => caption.text.includes(word));
+        if (keyword) {
+          const width = Math.min(620, ctx.measureText(keyword).width + 84);
+          const bx = (W - width) / 2;
+          const by = y - 70;
+          fillRoundRect(bx, by, width, 48, 6, "rgba(217,35,35,0.92)");
+          ctx.fillStyle = "#F7F8F5";
+          ctx.font = "800 28px Microsoft YaHei UI, PingFang SC, sans-serif";
+          ctx.fillText(keyword, W / 2, by + 33);
+        }
+        ctx.restore();
+      }
+
+      function drawEndCard(time, duration) {
+        const remaining = duration - time;
+        if (remaining > 10) return;
+        const alpha = Math.min(0.92, (10 - remaining) / 3);
+        ctx.save();
+        ctx.globalAlpha = alpha;
+        ctx.fillStyle = "#0B0F14";
+        ctx.fillRect(0, 0, W, H);
+
+        ctx.globalAlpha = Math.min(1, alpha * 1.2);
+        ctx.textAlign = "center";
+        ctx.fillStyle = "#F7F8F5";
+        ctx.font = "900 86px Microsoft YaHei UI, PingFang SC, sans-serif";
+        ctx.fillText("机油别乱加", W / 2, 455);
+        ctx.fillStyle = "#D92323";
+        ctx.fillRect(W / 2 - 250, 494, 500, 10);
+        ctx.fillStyle = "#F0B429";
+        ctx.font = "700 42px Microsoft YaHei UI, PingFang SC, sans-serif";
+        ctx.fillText("先学会判断，再决定购买", W / 2, 570);
+        ctx.fillStyle = "#D6D9D4";
+        ctx.font = "500 30px Microsoft YaHei UI, PingFang SC, sans-serif";
+        ctx.fillText("云耀能源润滑油官方号", W / 2, 640);
+        ctx.restore();
+      }
+
+      function drawFrame(forceTime) {
+        const time = forceTime ?? manualTime ?? (audio.currentTime || 0);
+        const duration = audioDuration || 214;
+        const progress = Math.max(0, Math.min(1, time / duration));
+        ctx.clearRect(0, 0, W, H);
+
+        if (speaker.complete && speaker.naturalWidth) {
+          drawImageCover(speaker, progress);
+        } else {
+          ctx.fillStyle = "#0B0F14";
+          ctx.fillRect(0, 0, W, H);
+        }
+
+        drawVignette(time);
+        drawHeader(time, progress);
+        drawPhaseCard(activePhase(time), time);
+        drawRiskStack(time, progress);
+        drawCaption(activeCaption(time), time);
+        drawEndCard(time, duration);
+      }
+
+      function loop() {
+        drawFrame();
+        requestAnimationFrame(loop);
+      }
+
+      function waitForMedia() {
+        return Promise.all([
+          new Promise((resolve) => {
+            if (speaker.complete && speaker.naturalWidth) resolve();
+            else speaker.onload = resolve;
+          }),
+          new Promise((resolve) => {
+            if (audio.readyState >= 1) resolve();
+            else audio.onloadedmetadata = resolve;
+          })
+        ]);
+      }
+
+      async function setup() {
+        await waitForMedia();
+        audioDuration = Number.isFinite(audio.duration) ? audio.duration : audioDuration;
+        buildCaptionGroups(audioDuration);
+        window.__ready = true;
+        window.__meta = { duration: audioDuration, captions: groups.length };
+        drawFrame(0);
+        loop();
+      }
+
+      document.getElementById("play").onclick = () => {
+        manualTime = null;
+        audio.play();
+      };
+      document.getElementById("pause").onclick = () => audio.pause();
+
+      window.previewAt = (time) => {
+        manualTime = time;
+        drawFrame(time);
+      };
+
+      window.startRecording = async (preferredMimeType) => {
+        if (recorderState !== "idle") return;
+        recorderState = "recording";
+        document.body.classList.add("recording");
+        manualTime = null;
+        audio.pause();
+        audio.currentTime = 0;
+
+        const stream = canvas.captureStream(30);
+        const audioContext = new AudioContext();
+        const source = audioContext.createMediaElementSource(audio);
+        const dest = audioContext.createMediaStreamDestination();
+        source.connect(dest);
+        source.connect(audioContext.destination);
+        for (const track of dest.stream.getAudioTracks()) {
+          stream.addTrack(track);
+        }
+
+        const mimeTypes = [
+          preferredMimeType,
+          "video/mp4;codecs=avc1.42E01E,mp4a.40.2",
+          "video/mp4;codecs=h264,aac",
+          "video/mp4",
+          "video/webm;codecs=vp9,opus",
+          "video/webm;codecs=vp8,opus",
+          "video/webm"
+        ].filter(Boolean);
+        const mimeType = mimeTypes.find((item) => MediaRecorder.isTypeSupported(item)) || "";
+        window.__recordMimeType = mimeType || "browser-default";
+        const recorder = new MediaRecorder(stream, mimeType ? { mimeType, videoBitsPerSecond: 4500000 } : undefined);
+
+        function bufferToBase64(buffer) {
+          const bytes = new Uint8Array(buffer);
+          let binary = "";
+          const chunkSize = 0x8000;
+          for (let i = 0; i < bytes.length; i += chunkSize) {
+            binary += String.fromCharCode.apply(null, bytes.subarray(i, i + chunkSize));
+          }
+          return btoa(binary);
+        }
+
+        let lastReport = -10;
+        const progressTimer = setInterval(() => {
+          if (window.reportProgress && audio.currentTime - lastReport >= 10) {
+            lastReport = audio.currentTime;
+            window.reportProgress(Math.round(audio.currentTime), Math.round(audioDuration));
+          }
+        }, 500);
+
+        const done = new Promise((resolve, reject) => {
+          recorder.ondataavailable = async (event) => {
+            if (!event.data || !event.data.size) return;
+            const buffer = await event.data.arrayBuffer();
+            await window.pushChunk(bufferToBase64(buffer));
+          };
+          recorder.onerror = (event) => reject(event.error || new Error("MediaRecorder failed"));
+          recorder.onstop = () => {
+            clearInterval(progressTimer);
+            stream.getTracks().forEach((track) => track.stop());
+            audioContext.close();
+            recorderState = "done";
+            resolve();
+          };
+          audio.onended = () => {
+            if (recorder.state !== "inactive") recorder.stop();
+          };
+        });
+
+        recorder.start(1000);
+        await audio.play();
+        await done;
+      };
+
+      setup();
+    </script>
+  </body>
+</html>
