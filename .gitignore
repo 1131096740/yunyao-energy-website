@@ -1,4 +1,4 @@
-﻿.auth/
+.auth/
 .auth-xhs/
 .env
 .cheat-cache/
@@ -10,6 +10,7 @@ __pycache__/
 .DS_Store
 
 # Build output
+dist/
 website/dist/
 
 # Node modules (non-website)
@@ -19,3 +20,5 @@ opencli-home/.opencli/node_modules/
 # Video renders (too large for git)
 videos/*/renders/*.mp4
 videos/*/renders/*.webm
+# Dependencies (Cloudflare will install)
+website/node_modules/
