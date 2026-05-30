@@ -13,8 +13,8 @@ import {
 
 gsap.registerPlugin(ScrollTrigger);
 
-const asset = (name) => `/brochure/${name}`;
-const brandAsset = (name) => `/brand/${name}`;
+const asset = (name) => ${import.meta.env.BASE_URL}brochure/;
+const brandAsset = (name) => ${import.meta.env.BASE_URL}brand/;
 
 const advantages = [
   {
